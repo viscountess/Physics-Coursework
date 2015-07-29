@@ -59,3 +59,6 @@ SDL code base/SDL Test/Debug/vc120.idb
 *.pdb
 SDL code base/SDL Test/Debug/vc120.pdb
 *.obj
+SDL code base/SDL Test/Debug/SDL Test.log
+*.log
+SDL code base/SDL Test/Debug/SDL Test.log
