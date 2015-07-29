@@ -47,3 +47,15 @@ Temporary Items
 SDL code base/SDL Test/Debug/SDL Test.log
 *.log
 *.log
+*.tlog
+SDL code base/SDL Test/Debug/SDL Test.tlog/cl.command.1.tlog
+*.tlog
+SDL code base/SDL Test.opensdf
+*.opensdf
+*.tlog
+SDL code base/SDL Test/Debug/SDL Test.tlog/link.read.1.tlog
+*.tlog
+SDL code base/SDL Test/Debug/vc120.idb
+*.pdb
+SDL code base/SDL Test/Debug/vc120.pdb
+*.obj
