@@ -41,3 +41,9 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+*.tlog
+*.log
+*.log
+SDL code base/SDL Test/Debug/SDL Test.log
+*.log
+*.log
