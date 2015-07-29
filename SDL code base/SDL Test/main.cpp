@@ -14,6 +14,7 @@
 
 #include <GL/glew.h>
 #include <SDL.h>
+#include <SDL_opengl.h>
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -23,26 +24,17 @@ using namespace std;
 
 BasePhysics * player;
 
+const int s_windowXSize = 1024;
+const int s_windowYSize = 768;
+
 // Set up rendering context
 SDL_Window * setupRC(SDL_GLContext &context) {
 	SDL_Window * window;
-	SDL_Init(SDL_INIT_VIDEO);
-	
-    // Request an OpenGL 3.0 context.
-    // Not able to use SDL to choose profile (yet), should default to core profile on 3.2 or later
-	// If you request a context not supported by your drivers, no OpenGL context will be created
-	
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE); 
-
-	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);  // double buffering on
-	SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
-	SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 4); // Turn on x4 multisampling anti-aliasing (MSAA)
- 
+	SDL_Init(SDL_INIT_EVERYTHING);
+	 
     // Create 800x600 window
     window = SDL_CreateWindow("B00256311 - Interactive Physical Modelling Project", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-        1500, 1000, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN );
+		s_windowXSize, s_windowYSize, SDL_WINDOW_OPENGL);
 	
     context = SDL_GL_CreateContext(window); // Create opengl context and attach to window
     SDL_GL_SetSwapInterval(1); // set swap buffers to sync with monitor's vertical refresh rate
@@ -57,59 +49,35 @@ SDL_Window * setupRC(SDL_GLContext &context) {
 void init(void) {
 
 	player = new BasePhysics();
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+
+	//Initialize Modelview Matrix
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+	//Initialize clear color
+	glClearColor(0.f, 0.f, 0.f, 1.f);
+	gluOrtho2D(0, s_windowXSize, 0, s_windowYSize);
+
+	//Check for error
+	GLenum error = glGetError();
+	if (error != GL_NO_ERROR)
+	{
+		printf("Error initializing OpenGL! %s\n", gluErrorString(error));
+	}
 }
 
 void draw(SDL_Window * window) {
-	// clear the screen
-	/* Clear the color and depth buffers. */
-	/*glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	/* We don't want to modify the projection matrix. */
-	/*glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
 	
-	// These are deprecated functions. If a core profile has been correctly 
-	// created, these commands should compile, but wont render anything
-	glColor3f(0.5,1.0,1.0);
-	glBegin(GL_TRIANGLES);
-		glVertex3f(0.5,0.5,0.0);
-		glVertex3f(0.7,0.5,0.0);
-		glVertex3f(0.5,0.7,0.0);
-	glEnd();
-
-	
-
-    SDL_GL_SwapWindow(window); // swap buffers*/
-
-/*	glClearColor(1.f, 1.f, 1.f, 1.f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glLoadIdentity();
-
-	glBegin(GL_QUADS);
-	glColor3f(1, 0, 0); glVertex3f(0, 0, 0);
-	glColor3f(1, 1, 0); glVertex3f(10000, 0, 0);
-	glColor3f(1, 0, 1); glVertex3f(10000, 10000, 0);
-	glColor3f(1, 1, 1); glVertex3f(0, 10000, 0);
-	glEnd();
-
-	player->draw();
-
-	SDL_GL_SwapWindow(window);
-	SDL_UpdateWindowSurface(window);*/
-
 	//Clear color buffer
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	//Render quad
-	//if (true)
-	{
-		glBegin(GL_QUADS);
-		glVertex2f(-0.5f, -0.5f);
-		glVertex2f(0.5f, -0.5f);
-		glVertex2f(0.5f, 0.5f);
-		glVertex2f(-0.5f, 0.5f);
-		glEnd();
-	}
+	player->draw();
+	//Update screen
+	SDL_GL_SwapWindow(window);
+
 }
 
 
