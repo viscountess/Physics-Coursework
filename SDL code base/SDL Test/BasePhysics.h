@@ -1,6 +1,7 @@
 #include<iostream>
 #include<gl/glut.h>
 #include "Bitmap.h"
+#include <SDL.h>
 
 #ifndef BASEPHYSICS_INCLUDE
 #define BASEPHYSICS_INCLUDE
@@ -16,12 +17,13 @@ public:
 
 	void reset();
 	void applyForce();
-	void update();
+	void update(Uint32 deltaTime);
 	void draw();
 
 private:
 
-	float Xpos, Ypos, Xvel, Yvel;
+	float Xpos, Ypos, Xvel, Yvel, accel;
+	float mass;
 	Bitmap * image;		//create pointer for player image
 };
 

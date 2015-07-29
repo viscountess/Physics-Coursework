@@ -27,6 +27,8 @@ BasePhysics * player;
 const int s_windowXSize = 1024;
 const int s_windowYSize = 768;
 
+Uint32 lastTime = 0;
+
 // Set up rendering context
 SDL_Window * setupRC(SDL_GLContext &context) {
 	SDL_Window * window;
@@ -67,6 +69,8 @@ void init(void) {
 	{
 		printf("Error initializing OpenGL! %s\n", gluErrorString(error));
 	}
+
+	lastTime = SDL_GetTicks();
 }
 
 void draw(SDL_Window * window) {
@@ -78,6 +82,13 @@ void draw(SDL_Window * window) {
 	//Update screen
 	SDL_GL_SwapWindow(window);
 
+}
+
+void update()
+{
+	Uint32 deltaTime = SDL_GetTicks() - lastTime;
+	player->update(deltaTime);
+	lastTime = SDL_GetTicks();
 }
 
 
@@ -105,6 +116,7 @@ int main(int argc, char *argv[]) {
 			if (sdlEvent.type == SDL_QUIT)
 				running = false;
 		}
+		update();
 		draw(hWindow); // call the draw function
 	}
 
