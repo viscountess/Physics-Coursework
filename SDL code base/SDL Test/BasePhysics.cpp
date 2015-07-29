@@ -23,13 +23,19 @@ void BasePhysics::reset()
 
 }
 
-void BasePhysics::applyForce()
+void BasePhysics::applyForce(float hForce, float vForce)
 {
 
 }
 
 void BasePhysics::update(Uint32 deltaTime)
 {
+	const Uint8 *keys = SDL_GetKeyboardState(NULL);
+
+	if (keys[SDL_SCANCODE_SPACE]){
+		applyForce();
+
+	}
 	float delta = ((float)deltaTime)/1000.f;
 
 

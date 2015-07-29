@@ -16,7 +16,7 @@ public:
 	~BasePhysics();
 
 	void reset();
-	void applyForce();
+	void applyForce(float hForce, float vForce);
 	void update(Uint32 deltaTime);
 	void draw();
 
