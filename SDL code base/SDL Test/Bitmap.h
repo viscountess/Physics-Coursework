@@ -106,7 +106,7 @@ public:
 	int getHeight(){ return height;}
 	void draw();	// Draw at
 	void draw(int x, int y, int w, int h);
-	void drawAt(int pos_x, int pos_y);
+	void drawAt(float pos_x, float pos_y);
 	void drawAt(int pos_x, int pos_y, int seg_x, int seg_y, int seg_w, int seg_h);
 	void setCurrentImage(const char fname[], bool transparency=false);
 	void setCurrentImage(std::string fname, bool transparency = false);
@@ -119,7 +119,7 @@ private:
 	BMPError BMPLoadGL(const char fname[]);
 	BMPError BMPSetTransparency();
 	void drawTexture(float tex_x1, float tex_y1, float text_x2, float tex_y2,
-		         int scr_x1, int scr_y1, int scr_x2, int scr_y2);
+		         float scr_x1, float scr_y1, float scr_x2, float scr_y2);
 	GLubyte& pixel(int x,int y,int c);
 	void allocateMem();
 	int width,height;

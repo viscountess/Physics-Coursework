@@ -24,6 +24,7 @@ private:
 
 	float Xpos, Ypos, Xvel, Yvel, accel;
 	float mass;
+	bool parachuteOpen;
 	Bitmap * image;		//create pointer for player image
 };
 

@@ -38,6 +38,8 @@ SDL_Window * setupRC(SDL_GLContext &context) {
     window = SDL_CreateWindow("B00256311 - Interactive Physical Modelling Project", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
 		s_windowXSize, s_windowYSize, SDL_WINDOW_OPENGL);
 	
+	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+
     context = SDL_GL_CreateContext(window); // Create opengl context and attach to window
     SDL_GL_SetSwapInterval(1); // set swap buffers to sync with monitor's vertical refresh rate
 

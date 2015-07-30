@@ -290,7 +290,7 @@ BMPError Bitmap::BMPLoad(const char* fname)
 }
 
 void Bitmap::drawTexture(float tex_x1, float tex_y1, float tex_x2, float tex_y2,
-		         int scr_x1, int scr_y1, int scr_x2, int scr_y2){
+		         float scr_x1, float scr_y1, float scr_x2, float scr_y2){
 	// Draw a rectangle from a texture into a rectangle on the screen.
 	// Orientation is determined by the correspondence from tex_ordinate to scr_ordinate.
 	glEnable(GL_TEXTURE_2D);
@@ -360,7 +360,7 @@ void Bitmap::draw(int x, int y, int w, int h){
  * texture's corner will render to.  Because we are drawing at (pos_x, pos_y), the four
  * corner points need to be exressed relative to this point.
  */
-void Bitmap::drawAt(int pos_x, int pos_y){
+void Bitmap::drawAt(float pos_x, float pos_y){
 	drawTexture(0, 0, 1, 1, pos_x, pos_y, pos_x+width, pos_y+height);
 }
 
