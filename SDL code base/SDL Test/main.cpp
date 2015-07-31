@@ -47,6 +47,8 @@ SDL_Window * setupRC(SDL_GLContext &context) {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 
+	TTF_Init();
+
 	return window;
 }
 
