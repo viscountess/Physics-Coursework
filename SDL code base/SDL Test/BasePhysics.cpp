@@ -48,9 +48,18 @@ void BasePhysics::reset()
 //
 //}
 
-void BasePhysics::updateLabels()
+void BasePhysics::updateLabels(Uint32 deltaTime)
 {
 	SDL_Color labelColor = { 0, 255, 0 };
+	static Uint32 lastUpdateTime = 0;
+
+	//Update the labels every 30 hertz
+	lastUpdateTime += deltaTime;
+
+	if (lastUpdateTime < 33)
+		return;
+
+	lastUpdateTime = 0;
 
 	//If the memory has been allocated already, then free it up
 	//for the new label.
@@ -82,6 +91,18 @@ void BasePhysics::updateLabels()
 
 	_snprintf(buffer, 32, "Parachute Open: %d", parachuteOpen);
 	paraLabel->textToTexture(buffer, textFont, labelColor);
+
+	_snprintf(buffer, 32, "Air Drag: %.3f", parachuteOpen ? Ao : Ac);
+	airDragLabel->textToTexture(buffer, textFont, labelColor);
+
+	_snprintf(buffer, 32, "X Position: %.3f", Xpos);
+	xPosLabel->textToTexture(buffer, textFont, labelColor);
+
+	_snprintf(buffer, 32, "Y Position: %.3f", Ypos);
+	yPosLabel->textToTexture(buffer, textFont, labelColor);
+
+	_snprintf(buffer, 32, "Y Velocity: %.3f", Yvel);
+	yVelLabel->textToTexture(buffer, textFont, labelColor);
 
 
 }
@@ -115,13 +136,23 @@ void BasePhysics::update(Uint32 deltaTime)
 	Ypos += Yvel * delta;
 	Xpos += Xvel * delta;*/
 
-	//updateLabels();
+	updateLabels(deltaTime);
 }
 
 void BasePhysics::draw(){
 
 	image->drawAt(Xpos, Ypos);
 
-	/*accelLabel->draw(20, 20);
-	paraLabel->draw(20, 40);*/
+	if (accelLabel)
+		accelLabel->draw(20, 20);
+	if (paraLabel)
+		paraLabel->draw(20, 40);
+	if (airDragLabel)
+		airDragLabel->draw(20, 60);
+	if (xPosLabel)
+		xPosLabel->draw(20, 80);
+	if (yPosLabel)
+		yPosLabel->draw(20, 100);
+	if (yVelLabel)
+		yVelLabel->draw(20, 120);
 }

@@ -20,7 +20,7 @@ public:
 	void applyForce(float hForce, float vForce);
 	void update(Uint32 deltaTime);
 	void draw();
-	void updateLabels();
+	void updateLabels(Uint32 deltaTime);
 
 	//Pointers for the text displayed onscreen (debug txt)
 	Label * accelLabel;
