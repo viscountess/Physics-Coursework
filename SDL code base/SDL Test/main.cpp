@@ -13,6 +13,7 @@
 #include "BasePhysics.h"
 #include "SeeSaw.h"
 #include "Ball.h"
+#include "Jumper.h"
 
 #include <GL/glew.h>
 #include <SDL.h>
@@ -58,7 +59,7 @@ SDL_Window * setupRC(SDL_GLContext &context) {
 
 void init(void) {
 
-	player = new BasePhysics();
+	player = new Jumper();
 	seesaw = new SeeSaw();
 	ball = new Ball();
 
@@ -86,9 +87,7 @@ void init(void) {
 void draw(SDL_Window * window) {
 	
 	//Clear color buffer
-	glClear(GL_COLOR_BUFFER_BIT);
-
-	
+	glClear(GL_COLOR_BUFFER_BIT);	
 
 	//Drawing the base for SeeSaw
 	glBegin(GL_POLYGON);

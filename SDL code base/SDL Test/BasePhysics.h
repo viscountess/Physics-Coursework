@@ -18,8 +18,8 @@ public:
 
 	void reset();
 	void applyForce(float hForce, float vForce);
-	void update(Uint32 deltaTime);
-	void draw();
+	virtual void update(Uint32 deltaTime);
+	virtual void draw();
 	void updateLabels(Uint32 deltaTime);
 
 	//Pointers for the text displayed onscreen (debug txt)
@@ -32,7 +32,7 @@ public:
 
 	TTF_Font* textFont;	// SDL type for True-Type font rendering
 
-private:
+protected:
 
 	float Xpos, Ypos, Xvel, Yvel, accel;
 	float mass;

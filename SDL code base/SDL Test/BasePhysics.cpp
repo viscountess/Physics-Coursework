@@ -13,9 +13,7 @@
 //constructor
 BasePhysics::BasePhysics()
 {
-	image = new Bitmap("rocket2.bmp", false);
-	Xpos = 500.0;
-	Ypos = 700.0;
+	
 	Xvel = 0;
 	Yvel = 0;
 	accel = -G;
@@ -109,12 +107,9 @@ void BasePhysics::updateLabels(Uint32 deltaTime)
 
 void BasePhysics::update(Uint32 deltaTime)
 {
-	const Uint8 *keys = SDL_GetKeyboardState(NULL);
+	
 
-	if (keys[SDL_SCANCODE_SPACE]){
-		parachuteOpen = true;
-
-	}
+	
 
 	float delta = ((float)deltaTime)/1000.f;
 	//accel = G - Ac
@@ -132,14 +127,6 @@ void BasePhysics::update(Uint32 deltaTime)
 	//Finding next position
 	Ypos = Ypos - (Yvel * delta);
 
-	if (keys[SDL_SCANCODE_LEFT])
-	{
-		if (!parachuteOpen)
-		 Xpos -= 0.2;
-		if (parachuteOpen)
-			Xpos -= 0.05;
-	}
-
 	/*Yvel += accel * delta;
 	Ypos += Yvel * delta;
 	Xpos += Xvel * delta;*/
@@ -149,7 +136,7 @@ void BasePhysics::update(Uint32 deltaTime)
 
 void BasePhysics::draw(){
 
-	image->drawAt(Xpos, Ypos);
+	
 
 	if (accelLabel)
 		accelLabel->draw(20, 20);
