@@ -11,6 +11,8 @@
 
 #include "rt3d.h"
 #include "BasePhysics.h"
+#include "SeeSaw.h"
+#include "Ball.h"
 
 #include <GL/glew.h>
 #include <SDL.h>
@@ -23,6 +25,8 @@ using namespace std;
 
 
 BasePhysics * player;
+SeeSaw * seesaw;
+Ball * ball;
 
 const int s_windowXSize = 1024;
 const int s_windowYSize = 768;
@@ -55,6 +59,8 @@ SDL_Window * setupRC(SDL_GLContext &context) {
 void init(void) {
 
 	player = new BasePhysics();
+	seesaw = new SeeSaw();
+	ball = new Ball();
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -82,7 +88,20 @@ void draw(SDL_Window * window) {
 	//Clear color buffer
 	glClear(GL_COLOR_BUFFER_BIT);
 
+	
+
+	//Drawing the base for SeeSaw
+	glBegin(GL_POLYGON);
+		glVertex2f(550, 80);
+		glVertex2f(575, 10);
+		glVertex2f(525, 10);
+	glEnd();
+	glFlush();
+
 	player->draw();
+	seesaw->draw();
+	ball->draw();
+	
 	//Update screen
 	SDL_GL_SwapWindow(window);
 

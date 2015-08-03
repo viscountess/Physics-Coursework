@@ -132,6 +132,14 @@ void BasePhysics::update(Uint32 deltaTime)
 	//Finding next position
 	Ypos = Ypos - (Yvel * delta);
 
+	if (keys[SDL_SCANCODE_LEFT])
+	{
+		if (!parachuteOpen)
+		 Xpos -= 0.2;
+		if (parachuteOpen)
+			Xpos -= 0.05;
+	}
+
 	/*Yvel += accel * delta;
 	Ypos += Yvel * delta;
 	Xpos += Xvel * delta;*/
