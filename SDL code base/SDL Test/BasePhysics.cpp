@@ -32,7 +32,8 @@ BasePhysics::BasePhysics()
 }
 
 //deconstructor
-BasePhysics::~BasePhysics(){
+BasePhysics::~BasePhysics()
+{
 
 }
 
@@ -108,24 +109,24 @@ void BasePhysics::updateLabels(Uint32 deltaTime)
 void BasePhysics::update(Uint32 deltaTime)
 {
 	
+	if (isUnderPhysicsControl)
+	{
+		float delta = ((float)deltaTime) / 1000.f;
+		//accel = G - Ac
 
-	
+		float A = parachuteOpen ? Ao : Ac;
 
-	float delta = ((float)deltaTime)/1000.f;
-	//accel = G - Ac
+		//Getting the average force
+		float avgForce = (mass * G) - (A * (Yvel * Yvel));
 
-	float A = parachuteOpen ? Ao : Ac;
+		accel = avgForce / mass;
 
-	//Getting the average force
-	float avgForce = (mass * G) - (A * (Yvel * Yvel));
+		float nextYVel = Yvel + (accel * delta);
+		Yvel = (Yvel + nextYVel) / 2.0; //finding average velocity
 
-	accel = avgForce / mass;
-
-	float nextYVel = Yvel + (accel * delta);
-	Yvel = (Yvel + nextYVel) / 2.0; //finding average velocity
-
-	//Finding next position
-	Ypos = Ypos - (Yvel * delta);
+		//Finding next position
+		Ypos = Ypos - (Yvel * delta);
+	}
 
 	/*Yvel += accel * delta;
 	Ypos += Yvel * delta;
@@ -135,8 +136,6 @@ void BasePhysics::update(Uint32 deltaTime)
 }
 
 void BasePhysics::draw(){
-
-	
 
 	if (accelLabel)
 		accelLabel->draw(20, 20);

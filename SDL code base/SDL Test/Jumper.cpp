@@ -6,7 +6,8 @@ Jumper::Jumper()
 {
 	jumperImage = new Bitmap("jumper_close.bmp", true);
 
-	Xpos = 500.0;
+	isUnderPhysicsControl = true;
+	Xpos = 350.0;
 	Ypos = 700.0;
 }
 
@@ -39,11 +40,7 @@ void Jumper::update(Uint32 deltaTime)
 
 	}
 
-	if (keys[SDL_SCANCODE_LEFT])
-	{
-		if (!parachuteOpen)
-			Xpos -= 0.2;
-		if (parachuteOpen)
-			Xpos -= 0.05;
-	}
+	if (Ypos <= 100)
+		isUnderPhysicsControl = false;
+	
 }

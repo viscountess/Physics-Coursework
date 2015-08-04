@@ -34,6 +34,8 @@ const int s_windowYSize = 768;
 
 Uint32 lastTime = 0;
 
+bool jumperHasLanded = false;
+
 // Set up rendering context
 SDL_Window * setupRC(SDL_GLContext &context) {
 	SDL_Window * window;
@@ -110,7 +112,30 @@ void update()
 {
 	Uint32 deltaTime = SDL_GetTicks() - lastTime;
 	player->update(deltaTime);
+	ball->update(deltaTime);
 	lastTime = SDL_GetTicks();
+
+	if (!jumperHasLanded)
+	{
+		if (!player->getUnderPhysicsControl())
+		{
+			ball->setUnderPhysicsControl(true);
+			jumperHasLanded = true;
+
+			float momentumA = (player->getMass() * player->getYVelocity());
+			/*float momentumB = (ball->getMass() * ball->getYVelocity());
+			float momentumTotal = momentumA * momentumB;*/
+
+			float disToMidPointA = 550 - player->getXposition();
+			float disToMidPointB = ball->getXposition() - 550;
+
+			//Since the player immediately comes to rest, we will transfer all momentum to the ball
+			//Since the ball is not moving at start, the total momentum is simply the momentum of the player
+			ball->setYVelocity((-momentumA / ball->getMass()) * (disToMidPointA/disToMidPointB));
+
+
+		}
+	}
 }
 
 

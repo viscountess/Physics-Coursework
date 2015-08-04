@@ -15,7 +15,7 @@ public:
 
 	void draw();
 	void reset();
-	void update();
+	void update(Uint32 deltaTime);
 
 private:
 	Bitmap * ballImage;		//create pointer for ball image
