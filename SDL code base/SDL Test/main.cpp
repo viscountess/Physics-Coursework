@@ -97,7 +97,6 @@ void draw(SDL_Window * window) {
 		glVertex2f(575, 10);
 		glVertex2f(525, 10);
 	glEnd();
-	glFlush();
 
 	player->draw();
 	seesaw->draw();
