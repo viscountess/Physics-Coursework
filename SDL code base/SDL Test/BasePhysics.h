@@ -37,6 +37,8 @@ public:
 	Label * yPosLabel;
 	Label * yVelLabel;
 	Label * xVelLabel;
+	Label * playerStatsLabel;
+	Label * ballStatsLabel;
 
 	TTF_Font* textFont;	// SDL type for True-Type font rendering
 

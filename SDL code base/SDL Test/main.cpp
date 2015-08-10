@@ -15,6 +15,7 @@
 #include "Ball.h"
 #include "Jumper.h"
 #include "AngularWall.h"
+#include "Utils.h"
 
 #include <GL/glew.h>
 #include <SDL.h>
@@ -134,7 +135,7 @@ void update()
 {
 	Uint32 deltaTime = SDL_GetTicks() - lastTime;
 	player->update(deltaTime);
-	ball->update(deltaTime);
+	ball->update(deltaTime, angWall);
 	lastTime = SDL_GetTicks();
 
 	if (!jumperHasLanded)
@@ -148,8 +149,8 @@ void update()
 			/*float momentumB = (ball->getMass() * ball->getYVelocity());
 			float momentumTotal = momentumA * momentumB;*/
 
-			float disToMidPointA = 550 - player->getXposition();
-			float disToMidPointB = ball->getXposition() - 550;
+			float disToMidPointA = pixelsToMeters(550) - player->getXposition();
+			float disToMidPointB = ball->getXposition() - pixelsToMeters(550);
 
 			//Since the player immediately comes to rest, we will transfer all momentum to the ball
 			//Since the ball is not moving at start, the total momentum is simply the momentum of the player

@@ -1,18 +1,21 @@
-﻿Build started 29/07/2015 23:11:21.
+﻿Build started 10/08/2015 16:01:05.
      1>Project "D:\IPM Physics project\Physics-Coursework\SDL code base\SDL Test\SDL Test.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\dev\glew-1.11.0\include" /I"C:\dev\SDL2-2.0.3\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt BasePhysics.cpp main.cpp
-         main.cpp
-         BasePhysics.cpp
-         Generating Code...
+         D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\dev\glew-1.11.0\include" /I"C:\dev\SDL2-2.0.3\include" /I"C:\dev\SDL2 plugins\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt AngularWall.cpp
+         AngularWall.cpp
        Link:
-         D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\IPM Physics project\Physics-Coursework\SDL code base\Debug\SDL Test.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\dev\glew-1.11.0\lib\Release\Win32" /LIBPATH:"C:\dev\SDL2-2.0.3\lib\x86" SDL2.lib SDL2main.lib glew32.lib opengl32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /NODEFAULTLIB:msvcrt.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\IPM Physics project\Physics-Coursework\SDL code base\Debug\SDL Test.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\IPM Physics project\Physics-Coursework\SDL code base\Debug\SDL Test.lib" /MACHINE:X86 Debug\BasePhysics.obj
+         D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\IPM Physics project\Physics-Coursework\SDL code base\Debug\SDL Test.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\dev\glew-1.11.0\lib\Release\Win32" /LIBPATH:"C:\dev\SDL2-2.0.3\lib\x86" /LIBPATH:"C:\dev\SDL2 plugins\lib\x86" SDL2_ttf.lib SDL2.lib SDL2main.lib glew32.lib opengl32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /NODEFAULTLIB:msvcrt.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\IPM Physics project\Physics-Coursework\SDL code base\Debug\SDL Test.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\IPM Physics project\Physics-Coursework\SDL code base\Debug\SDL Test.lib" /MACHINE:X86 Debug\AngularWall.obj
+         Debug\Ball.obj
+         Debug\BasePhysics.obj
          Debug\Bitmap.obj
+         Debug\Jumper.obj
+         Debug\label.obj
          Debug\main.obj
-     1>Bitmap.obj : warning LNK4099: PDB 'vc120.pdb' was not found with 'Bitmap.obj' or at 'D:\IPM Physics project\Physics-Coursework\SDL code base\Debug\vc120.pdb'; linking object as if no debug info
+         Debug\SeeSaw.obj
+         Debug\Utils.obj
          SDL Test.vcxproj -> D:\IPM Physics project\Physics-Coursework\SDL code base\Debug\SDL Test.exe
      1>Done Building Project "D:\IPM Physics project\Physics-Coursework\SDL code base\SDL Test\SDL Test.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.56
+Time Elapsed 00:00:00.95

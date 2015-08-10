@@ -2,7 +2,9 @@
 #define BALL_INCLUDE
 
 #include "BasePhysics.h"
+#include "AngularWall.h"
 #include "Bitmap.h"
+#include "Vector.h"
 
 class Ball : public BasePhysics
 {
@@ -15,21 +17,11 @@ public:
 
 	void draw();
 	void reset();
-	void update(Uint32 deltaTime);
+	void update(Uint32 deltaTime, AngularWall * wallAngle);
 	//void updateLabels(Uint32 deltaTime);
 
 private:
 	Bitmap * ballImage;		//create pointer for ball image
-
-	////Pointers for the text displayed onscreen (debug txt)
-	//Label * accelYLabel;
-	//Label * accelXLabel;
-	//Label * xPosLabel;
-	//Label * yPosLabel;
-	//Label * yVelLabel;
-	//Label * xVelLabel;
-
-	//TTF_Font* textFont;	// SDL type for True-Type font rendering
 
 	float ballRadius;
 };

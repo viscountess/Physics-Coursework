@@ -62,3 +62,8 @@ SDL code base/SDL Test/Debug/vc120.pdb
 SDL code base/SDL Test/Debug/SDL Test.log
 *.log
 SDL code base/SDL Test/Debug/SDL Test.log
+SDL code base/SDL Test.opensdf
+SDL code base/SDL Test.opensdf
+*.opensdf
+*.tlog
+SDL code base/SDL Test/Debug/vc120.idb

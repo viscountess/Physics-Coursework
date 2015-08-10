@@ -27,6 +27,21 @@
     <ClCompile Include="label.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Ball.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Jumper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SeeSaw.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AngularWall.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BasePhysics.h">
@@ -36,6 +51,24 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="label.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Ball.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Jumper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SeeSaw.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AngularWall.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

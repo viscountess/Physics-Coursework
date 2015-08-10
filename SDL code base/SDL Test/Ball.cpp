@@ -1,103 +1,83 @@
-#include "Ball.h"
+﻿#include "Ball.h"
+#include "AngularWall.h"
 #include "Bitmap.h"
+#include "Utils.h"
 
-#define R (0.9) //How much energy is conserved in bounce
+#define R (0.7) //How much energy is conserved in bounce
 //constructor
+
+static AngularWall* s_wallAngle = 0;
 Ball::Ball()
 {
 	ballImage = new Bitmap("magic_ball.bmp", true);
 	isUnderPhysicsControl = false;
 
-	////Initiatlising NULL pointers so that we dont accidently delete them
-	//accelYLabel = nullptr;
-	//accelXLabel = nullptr;
-	//xPosLabel = nullptr;
-	//yPosLabel = nullptr;
-	//yVelLabel = nullptr;
+	ballRadius = pixelsToMeters((ballImage->getHeight()) / 2);
 
-	//textFont = TTF_OpenFont("MavenPro-Regular.ttf", 24);
-
-	ballRadius = (ballImage->getHeight()) / 2;
-
-	Xpos = 725;
-	Ypos = 100 + ballRadius;
+	Xpos = pixelsToMeters(725);
+	Ypos = pixelsToMeters(100) + ballRadius;
 }
 
-//decontructor
+//deconstructor
 Ball::~Ball()
 {
 
 }
 
-//void Ball::updateLabels(Uint32 deltaTime)
-//{
-//	SDL_Color labelColor = { 0, 255, 0 };
-//	static Uint32 lastUpdateTime = 0;
-//
-//	//Update the labels every 30 hertz
-//	lastUpdateTime += deltaTime;
-//
-//	if (lastUpdateTime < 33)
-//		return;
-//
-//	lastUpdateTime = 0;
-//
-//	//If the memory has been allocated already, then free it up
-//	//for the new label.
-//	if (accelYLabel != 0)
-//		delete accelYLabel;
-//	if (accelXLabel != 0)
-//		delete accelXLabel;
-//	if (xPosLabel != 0)
-//		delete xPosLabel;
-//	if (yPosLabel != 0)
-//		delete yPosLabel;
-//	if (yVelLabel != 0)
-//		delete yVelLabel;
-//
-//	//initialise new label objects
-//	accelYLabel = new Label();
-//	xPosLabel = new Label();
-//	yPosLabel = new Label();
-//	yVelLabel = new Label();
-//
-//	//create textures from strings
-//	char buffer[32];
-//	_snprintf(buffer, 32, "Y Acceleration: %.3f", accelY);
-//	accelYLabel->textToTexture(buffer, textFont, labelColor);
-//
-//	_snprintf(buffer, 32, "X Acceleration: %.3f", accelX);
-//	accelXLabel->textToTexture(buffer, textFont, labelColor);
-//
-//	_snprintf(buffer, 32, "X Position: %.3f", Xpos);
-//	xPosLabel->textToTexture(buffer, textFont, labelColor);
-//
-//	_snprintf(buffer, 32, "Y Position: %.3f", Ypos);
-//	yPosLabel->textToTexture(buffer, textFont, labelColor);
-//
-//	_snprintf(buffer, 32, "Y Velocity: %.3f", Yvel);
-//	yVelLabel->textToTexture(buffer, textFont, labelColor);
-//
-//
-//}
-
-
 void Ball::draw()
 {
-	ballImage->drawAt(Xpos, Ypos, true);
+	if (s_wallAngle)
+	{
 
-	if (accelYLabel)
-		accelYLabel->draw(20, 180);
-	if (accelXLabel)
-		accelXLabel->draw(20, 200);
+		//for (int i = 0; i < 4; i++)
+		{
+
+			/*Vector2D wallNormal = s_wallAngle->getSurfaceNormal(i);
+
+			glColor3f(1.f, 0.f, 0.f);
+			glLineWidth(10.f);
+
+			glBegin(GL_LINES);
+			glVertex2d(s_wallAngle->getWallXpos(), s_wallAngle->getWallYpos());
+			glVertex2d(s_wallAngle->getWallXpos() + (wallNormal.x * 50), s_wallAngle->getWallYpos() + (wallNormal.y * 50));
+			glEnd();*/
+
+			//glPointSize(10);
+			//for (int i = 0; i < 4; i++)
+			/*{
+				Vector2D wallStart, wallEnd;
+				s_wallAngle->getWallPoints(3, wallStart, wallEnd);
+
+				glColor3f(1.f, 0.f, 0.f);
+				glBegin(GL_POINTS);
+				glVertex2d(wallStart.x, wallStart.y);
+				glEnd();
+
+				glColor3f(0.f, 1.f, 0.f);
+				glBegin(GL_POINTS);
+				glVertex2f(wallEnd.x, wallEnd.y);
+				glEnd();
+			}*/
+		}
+	}
+
+	glColor3f(1.f, 1.f, 1.f);
+	ballImage->drawAt(metersToPixels(Xpos), metersToPixels(Ypos), true);
+
+	if (ballStatsLabel)
+		ballStatsLabel->draw(1200, 550);
 	if (xPosLabel)
-		xPosLabel->draw(20, 220);
+		xPosLabel->draw(1200, 520);
 	if (yPosLabel)
-		yPosLabel->draw(20, 240);
+		yPosLabel->draw(1200, 500);
+	if (accelYLabel)
+		accelYLabel->draw(1200, 480);
+	if (accelXLabel)
+		accelXLabel->draw(1200, 460);	
 	if (yVelLabel)
-		yVelLabel->draw(20, 260);
+		yVelLabel->draw(1200, 440);
 	if (xVelLabel)
-		xVelLabel->draw(20, 280);
+		xVelLabel->draw(1200, 420);
 }
 
 void Ball::reset()
@@ -105,32 +85,72 @@ void Ball::reset()
 	
 }
 
-void Ball::update(Uint32 deltaTime)
+void Ball::update(Uint32 deltaTime, AngularWall * wallAngle)
 {
 	BasePhysics::update(deltaTime);
 	updateLabels(deltaTime);
 
 	//Detect the collision with the ground
-	if ((Ypos - ballRadius) < 10)
+	if ((Ypos - ballRadius) < pixelsToMeters(10))
 	{
-		Ypos = 10 + ballRadius;
+		Ypos = pixelsToMeters(10.01) + ballRadius;
 		Yvel = R *- Yvel;
 		Xvel *= R;
 	}
 
 	//Collision detection with the right wall
-	if ((Xpos + ballRadius) > 1490)
+	if ((Xpos + ballRadius) > pixelsToMeters(1490))
 	{
-		Xpos = 1490 - ballRadius;
+		Xpos = pixelsToMeters(1489.99) - ballRadius;
 		Yvel *= R;
 		Xvel = R *- Xvel;
+		printf("Hit right wall\n");
 	}
 
 	//Collision detection with the left wall
-	if ((Xpos - ballRadius) < 10)
+	if ((Xpos - ballRadius) < pixelsToMeters(10))
 	{
-		Xpos = 10 + ballRadius;
+		Xpos = pixelsToMeters(10.01) + ballRadius;
 		Yvel *= R;
 		Xvel = R *-Xvel;
+		printf("Hit left wall\n");
+	}
+
+	//Collision detection against angular wall
+
+	s_wallAngle = wallAngle;
+
+	Vector2D pos(Xpos, Ypos);
+	for (int i = 0; i < 4; i++)
+	{
+		Vector2D start, end;
+		wallAngle->getWallPoints(i, start, end);
+
+		Vector2D point = GetClosestPointOnLineSegment(start, end, pos);
+
+		float dist = (point - pos).length();
+
+		// If the closest point on the line segment is within the bounds of our radius, then we have collided with it
+		if (dist <= ballRadius)
+		{
+			
+			Vector2D surfaceNormal = wallAngle->getSurfaceNormal(i);
+
+			Vector2D newpos = point + (surfaceNormal * (ballRadius + pixelsToMeters(0.01)));
+			Xpos = newpos.x;
+			Ypos = newpos.y;
+
+			Vector2D incoming(Xvel, Yvel);
+
+			Vector2D result = surfaceNormal * incoming.dot(surfaceNormal);
+			result *= -2.f;
+			result += incoming;
+			result *= R;
+
+			Xvel = result.x;
+			Yvel = result.y;
+
+			printf("Hit angular wall\n");
+		}
 	}
 }

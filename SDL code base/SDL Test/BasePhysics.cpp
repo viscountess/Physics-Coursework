@@ -4,7 +4,7 @@
 #define G (10.0)
 
 //Air drag - when chute is open
-#define Ao (30.0)
+#define Ao (100.0)
 
 //Air drag - when chute is closed
 #define Ac (0.3)
@@ -30,6 +30,8 @@ BasePhysics::BasePhysics()
 	yPosLabel = nullptr;
 	yVelLabel = nullptr;
 	xVelLabel = nullptr;
+	playerStatsLabel = nullptr;
+	ballStatsLabel = nullptr;
 
 	textFont = TTF_OpenFont("MavenPro-Regular.ttf", 24);
 }
@@ -81,6 +83,10 @@ void BasePhysics::updateLabels(Uint32 deltaTime)
 		delete yVelLabel;
 	if (xVelLabel != 0)
 		delete xVelLabel;
+	if (playerStatsLabel != 0)
+		delete playerStatsLabel;
+	if (ballStatsLabel != 0)
+		delete ballStatsLabel;
 
 	//initialise new label objects
 	accelYLabel = new Label();
@@ -91,6 +97,8 @@ void BasePhysics::updateLabels(Uint32 deltaTime)
 	yPosLabel = new Label();
 	yVelLabel = new Label();
 	xVelLabel = new Label();
+	playerStatsLabel = new Label();
+	ballStatsLabel = new Label();
 
 	//create textures from strings
 	char buffer[32];
@@ -117,6 +125,12 @@ void BasePhysics::updateLabels(Uint32 deltaTime)
 
 	_snprintf(buffer, 32, "X Velocity: %.3f", Xvel);
 	xVelLabel->textToTexture(buffer, textFont, labelColor);
+
+	_snprintf(buffer, 32, "Parachute Jumper Stats: ");
+	playerStatsLabel->textToTexture(buffer, textFont, labelColor);
+
+	_snprintf(buffer, 32, "Ball Stats: ");
+	ballStatsLabel->textToTexture(buffer, textFont, labelColor);
 
 
 }

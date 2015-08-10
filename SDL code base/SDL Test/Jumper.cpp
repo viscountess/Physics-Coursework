@@ -1,4 +1,5 @@
 #include "Jumper.h"
+#include "Utils.h"
 #include "SDL.h"
 
 //constructor
@@ -7,8 +8,8 @@ Jumper::Jumper()
 	jumperImage = new Bitmap("jumper_close.bmp", true);
 
 	isUnderPhysicsControl = true;
-	Xpos = 350.0;
-	Ypos = 700.0;
+	Xpos = pixelsToMeters(350.0);
+	Ypos = pixelsToMeters(700.0);
 }
 
 //deconstructor
@@ -19,20 +20,23 @@ Jumper::~Jumper()
 
 void Jumper::draw()
 {
-	if (accelYLabel)
-		accelYLabel->draw(20, 20);
-	if (paraLabel)
-		paraLabel->draw(20, 40);
-	if (airDragLabel)
-		airDragLabel->draw(20, 60);
+	if (playerStatsLabel)
+		playerStatsLabel->draw(1200, 730);
 	if (xPosLabel)
-		xPosLabel->draw(20, 80);
+		xPosLabel->draw(1200, 700);
 	if (yPosLabel)
-		yPosLabel->draw(20, 100);
+		yPosLabel->draw(1200, 680);
+	if (paraLabel)
+		paraLabel->draw(1200, 660);
+	if (airDragLabel)
+		airDragLabel->draw(1200, 640);
+	if (accelYLabel)
+		accelYLabel->draw(1200, 620);
 	if (yVelLabel)
-		yVelLabel->draw(20, 120);
+		yVelLabel->draw(1200, 600);
+	
 
-	jumperImage->drawAt(Xpos, Ypos);
+	jumperImage->drawAt(metersToPixels(Xpos), metersToPixels(Ypos));
 }
 
 void Jumper::reset()
@@ -52,7 +56,7 @@ void Jumper::update(Uint32 deltaTime)
 
 	}
 
-	if (Ypos <= 100)
+	if (Ypos <= pixelsToMeters(100))
 		isUnderPhysicsControl = false;
 	
 }

@@ -83,15 +83,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AngularWall.cpp" />
+    <ClCompile Include="Ball.cpp" />
     <ClCompile Include="BasePhysics.cpp" />
     <ClCompile Include="Bitmap.cpp" />
+    <ClCompile Include="Jumper.cpp" />
     <ClCompile Include="label.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="SeeSaw.cpp" />
+    <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AngularWall.h" />
+    <ClInclude Include="Ball.h" />
     <ClInclude Include="BasePhysics.h" />
     <ClInclude Include="Bitmap.h" />
+    <ClInclude Include="Jumper.h" />
     <ClInclude Include="label.h" />
+    <ClInclude Include="SeeSaw.h" />
+    <ClInclude Include="Utils.h" />
+    <ClInclude Include="Vector.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
