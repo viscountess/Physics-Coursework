@@ -14,6 +14,7 @@
 #include "SeeSaw.h"
 #include "Ball.h"
 #include "Jumper.h"
+#include "AngularWall.h"
 
 #include <GL/glew.h>
 #include <SDL.h>
@@ -28,8 +29,9 @@ using namespace std;
 BasePhysics * player;
 SeeSaw * seesaw;
 Ball * ball;
+AngularWall * angWall;
 
-const int s_windowXSize = 1024;
+const int s_windowXSize = 1500;
 const int s_windowYSize = 768;
 
 Uint32 lastTime = 0;
@@ -64,6 +66,7 @@ void init(void) {
 	player = new Jumper();
 	seesaw = new SeeSaw();
 	ball = new Ball();
+	angWall = new AngularWall();
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -91,16 +94,36 @@ void draw(SDL_Window * window) {
 	//Clear color buffer
 	glClear(GL_COLOR_BUFFER_BIT);	
 
-	//Drawing the base for SeeSaw
+	//Drawing left wall
 	glBegin(GL_POLYGON);
-		glVertex2f(550, 80);
-		glVertex2f(575, 10);
-		glVertex2f(525, 10);
+		glVertex2f(0, 0);
+		glVertex2f(10, 0);
+		glVertex2f(10, 1000);
+		glVertex2f(0, 1000);
 	glEnd();
+
+	//Drawing right wall
+	glBegin(GL_POLYGON);
+		glVertex2f(1490, 0);
+		glVertex2f(1500, 0);
+		glVertex2f(1500, 1000);
+		glVertex2f(1490, 1000);
+	glEnd();
+
+	//Drawing the ground plane
+	glBegin(GL_POLYGON);
+		glVertex2f (0, 10);
+		glVertex2f(2000, 10);
+		glVertex2f(2000, 0);
+		glVertex2f(0, 0);
+	glEnd();
+	glFlush();
+
 
 	player->draw();
 	seesaw->draw();
 	ball->draw();
+	angWall->draw();
 	
 	//Update screen
 	SDL_GL_SwapWindow(window);

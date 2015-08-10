@@ -360,8 +360,15 @@ void Bitmap::draw(int x, int y, int w, int h){
  * texture's corner will render to.  Because we are drawing at (pos_x, pos_y), the four
  * corner points need to be exressed relative to this point.
  */
-void Bitmap::drawAt(float pos_x, float pos_y){
-	drawTexture(0, 0, 1, 1, pos_x, pos_y, pos_x+width, pos_y+height);
+void Bitmap::drawAt(float pos_x, float pos_y, bool centreImage){
+	float xpos = pos_x;
+	float ypos = pos_y;
+	if (centreImage)
+	{
+		xpos -= width / 2;
+		ypos -= height / 2;
+	}
+	drawTexture(0, 0, 1, 1, xpos, ypos, xpos+width, ypos+height);
 }
 
 /** GL_QUADS drawing a retangular segment of a texture.

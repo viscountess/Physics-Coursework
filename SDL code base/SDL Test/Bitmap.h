@@ -106,7 +106,7 @@ public:
 	int getHeight(){ return height;}
 	void draw();	// Draw at
 	void draw(int x, int y, int w, int h);
-	void drawAt(float pos_x, float pos_y);
+	void drawAt(float pos_x, float pos_y, bool centreImage = false);
 	void drawAt(int pos_x, int pos_y, int seg_x, int seg_y, int seg_w, int seg_h);
 	void setCurrentImage(const char fname[], bool transparency=false);
 	void setCurrentImage(std::string fname, bool transparency = false);

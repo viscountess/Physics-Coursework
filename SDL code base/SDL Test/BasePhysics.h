@@ -25,22 +25,24 @@ public:
 	void setUnderPhysicsControl(bool physics) { isUnderPhysicsControl = physics; }
 	float getMass() { return mass; }
 	float getYVelocity() { return Yvel; }
-	void setYVelocity(float YVel) { Yvel = YVel; }
+	void setYVelocity(float YVel) { Yvel = YVel; Xvel = YVel; }
 	float getXposition() { return Xpos; }
 
 	//Pointers for the text displayed onscreen (debug txt)
-	Label * accelLabel;
+	Label * accelYLabel;
+	Label * accelXLabel;
 	Label * paraLabel;
 	Label * airDragLabel;
 	Label * xPosLabel;
 	Label * yPosLabel;
 	Label * yVelLabel;
+	Label * xVelLabel;
 
 	TTF_Font* textFont;	// SDL type for True-Type font rendering
 
 protected:
 
-	float Xpos, Ypos, Xvel, Yvel, accel;
+	float Xpos, Ypos, Xvel, Yvel, accelY, accelX;
 	float mass;
 	bool parachuteOpen;
 	Bitmap * image;		//create pointer for player image

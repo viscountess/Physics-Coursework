@@ -16,17 +16,20 @@ BasePhysics::BasePhysics()
 	
 	Xvel = 0;
 	Yvel = 0;
-	accel = -G;
-	mass = 80.0;
+	accelY = -G;
+	accelX = 0;
+	mass = 50.0;
 	parachuteOpen = false;
 
 	//Initiatlising NULL pointers so that we dont accidently delete them
-	accelLabel = nullptr;
+	accelYLabel = nullptr;
+	accelXLabel = nullptr;
 	paraLabel = nullptr;
 	airDragLabel = nullptr;
 	xPosLabel = nullptr;
 	yPosLabel = nullptr;
 	yVelLabel = nullptr;
+	xVelLabel = nullptr;
 
 	textFont = TTF_OpenFont("MavenPro-Regular.ttf", 24);
 }
@@ -62,8 +65,10 @@ void BasePhysics::updateLabels(Uint32 deltaTime)
 
 	//If the memory has been allocated already, then free it up
 	//for the new label.
-	if (accelLabel != 0)
-		delete accelLabel;
+	if (accelYLabel != 0)
+		delete accelYLabel;
+	if (accelXLabel != 0)
+		delete accelXLabel;
 	if (paraLabel != 0)
 		delete paraLabel;
 	if (airDragLabel != 0)
@@ -74,19 +79,26 @@ void BasePhysics::updateLabels(Uint32 deltaTime)
 		delete yPosLabel;
 	if (yVelLabel != 0)
 		delete yVelLabel;
+	if (xVelLabel != 0)
+		delete xVelLabel;
 
 	//initialise new label objects
-	accelLabel = new Label();
+	accelYLabel = new Label();
+	accelXLabel = new Label();
 	paraLabel = new Label();
 	airDragLabel = new Label();
 	xPosLabel = new Label();
 	yPosLabel = new Label();
 	yVelLabel = new Label();
+	xVelLabel = new Label();
 
 	//create textures from strings
 	char buffer[32];
-	_snprintf(buffer, 32, "Acceleration: %.3f", accel);
-	accelLabel->textToTexture(buffer, textFont, labelColor);
+	_snprintf(buffer, 32, "Y Acceleration: %.3f", accelY);
+	accelYLabel->textToTexture(buffer, textFont, labelColor);
+
+	_snprintf(buffer, 32, "X Acceleration: %.3f", accelX);
+	accelXLabel->textToTexture(buffer, textFont, labelColor);
 
 	_snprintf(buffer, 32, "Parachute Open: %d", parachuteOpen);
 	paraLabel->textToTexture(buffer, textFont, labelColor);
@@ -103,6 +115,9 @@ void BasePhysics::updateLabels(Uint32 deltaTime)
 	_snprintf(buffer, 32, "Y Velocity: %.3f", Yvel);
 	yVelLabel->textToTexture(buffer, textFont, labelColor);
 
+	_snprintf(buffer, 32, "X Velocity: %.3f", Xvel);
+	xVelLabel->textToTexture(buffer, textFont, labelColor);
+
 
 }
 
@@ -112,21 +127,41 @@ void BasePhysics::update(Uint32 deltaTime)
 	if (isUnderPhysicsControl)
 	{
 		float delta = ((float)deltaTime) / 1000.f;
-		//accel = G - Ac
 
-		float A = parachuteOpen ? Ao : Ac;
+		float B = (parachuteOpen ? Ao : Ac) / mass; // air drag - simplification from week 4's powerpoint slides
 
-		//Getting the average force
-		float avgForce = (mass * G) - (A * (Yvel * Yvel));
+		// I found that if the ball was travelling upwards, the air drag was still applying a force upwards that caused the
+		// ball to accelerate off the screen and never reappear. The air drag should either be a force in the opposite
+		// direction of motion - or it should be 0 when travelling upwards. Since air resistance should always be present,
+		// I am making it negative if the object is travelling upwards.
+		if (Yvel > 0)
+			B *= -1;
 
-		accel = avgForce / mass;
+		accelY = -(G - (B * Yvel * Yvel)); // acceleration - after simplification from week 4's powerpoint slide
 
-		float nextYVel = Yvel + (accel * delta);
-		Yvel = (Yvel + nextYVel) / 2.0; //finding average velocity
+		// nextYVel is considered V(i+1) - the veloicty at the end of this step. YVel is our stored velocity - V(i)
+		float nextYvel = Yvel + (accelY * delta);
+		// work out average velocity
+		float avgVel = (Yvel + nextYvel) / 2.f;
+		Ypos = Ypos + (avgVel * delta);
 
-		//Finding next position
-		Ypos = Ypos - (Yvel * delta);
+		// store the Y Velocity
+		Yvel = nextYvel;
+
+		//Physics for X (left & right) direction
+		B = (parachuteOpen ? Ao : Ac) / mass; // air drag - simplification from week 4's powerpoint slides
+
+		if (Xvel > 0)
+			B *= -1;
+
+		accelX = -(0 - (B * Xvel * Xvel)); // acceleration - after simplification from week 4's powerpoint slide
+		float nextXvel = Xvel + (accelX * delta);
+		// work out average velocity
+		avgVel = (Xvel + nextXvel) / 2.f;
+		Xpos = Xpos + (Xvel * delta);
+
 	}
+
 
 	/*Yvel += accel * delta;
 	Ypos += Yvel * delta;
@@ -137,16 +172,5 @@ void BasePhysics::update(Uint32 deltaTime)
 
 void BasePhysics::draw(){
 
-	if (accelLabel)
-		accelLabel->draw(20, 20);
-	if (paraLabel)
-		paraLabel->draw(20, 40);
-	if (airDragLabel)
-		airDragLabel->draw(20, 60);
-	if (xPosLabel)
-		xPosLabel->draw(20, 80);
-	if (yPosLabel)
-		yPosLabel->draw(20, 100);
-	if (yVelLabel)
-		yVelLabel->draw(20, 120);
+	
 }
