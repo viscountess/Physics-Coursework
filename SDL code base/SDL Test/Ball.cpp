@@ -6,7 +6,6 @@
 #define R (0.7) //How much energy is conserved in bounce
 //constructor
 
-static AngularWall* s_wallAngle = 0;
 Ball::Ball()
 {
 	ballImage = new Bitmap("magic_ball.bmp", true);
@@ -26,40 +25,6 @@ Ball::~Ball()
 
 void Ball::draw()
 {
-	if (s_wallAngle)
-	{
-
-		//for (int i = 0; i < 4; i++)
-		{
-
-			/*Vector2D wallNormal = s_wallAngle->getSurfaceNormal(i);
-
-			glColor3f(1.f, 0.f, 0.f);
-			glLineWidth(10.f);
-
-			glBegin(GL_LINES);
-			glVertex2d(s_wallAngle->getWallXpos(), s_wallAngle->getWallYpos());
-			glVertex2d(s_wallAngle->getWallXpos() + (wallNormal.x * 50), s_wallAngle->getWallYpos() + (wallNormal.y * 50));
-			glEnd();*/
-
-			//glPointSize(10);
-			//for (int i = 0; i < 4; i++)
-			/*{
-				Vector2D wallStart, wallEnd;
-				s_wallAngle->getWallPoints(3, wallStart, wallEnd);
-
-				glColor3f(1.f, 0.f, 0.f);
-				glBegin(GL_POINTS);
-				glVertex2d(wallStart.x, wallStart.y);
-				glEnd();
-
-				glColor3f(0.f, 1.f, 0.f);
-				glBegin(GL_POINTS);
-				glVertex2f(wallEnd.x, wallEnd.y);
-				glEnd();
-			}*/
-		}
-	}
 
 	glColor3f(1.f, 1.f, 1.f);
 	ballImage->drawAt(metersToPixels(Xpos), metersToPixels(Ypos), true);
@@ -104,7 +69,6 @@ void Ball::update(Uint32 deltaTime, AngularWall * wallAngle)
 		Xpos = pixelsToMeters(1489.99) - ballRadius;
 		Yvel *= R;
 		Xvel = R *- Xvel;
-		printf("Hit right wall\n");
 	}
 
 	//Collision detection with the left wall
@@ -113,19 +77,18 @@ void Ball::update(Uint32 deltaTime, AngularWall * wallAngle)
 		Xpos = pixelsToMeters(10.01) + ballRadius;
 		Yvel *= R;
 		Xvel = R *-Xvel;
-		printf("Hit left wall\n");
 	}
 
 	//Collision detection against angular wall
-
-	s_wallAngle = wallAngle;
-
 	Vector2D pos(Xpos, Ypos);
+	//For each side of the wall
 	for (int i = 0; i < 4; i++)
 	{
+		//Get the start and end points of the line that represents this edge
 		Vector2D start, end;
 		wallAngle->getWallPoints(i, start, end);
 
+		//Project the ball onto this line
 		Vector2D point = GetClosestPointOnLineSegment(start, end, pos);
 
 		float dist = (point - pos).length();
@@ -133,13 +96,16 @@ void Ball::update(Uint32 deltaTime, AngularWall * wallAngle)
 		// If the closest point on the line segment is within the bounds of our radius, then we have collided with it
 		if (dist <= ballRadius)
 		{
-			
 			Vector2D surfaceNormal = wallAngle->getSurfaceNormal(i);
 
+			//Push the ball out so it isn't colliding anymore
 			Vector2D newpos = point + (surfaceNormal * (ballRadius + pixelsToMeters(0.01)));
 			Xpos = newpos.x;
 			Ypos = newpos.y;
 
+			//Since we have collided wih the wall, we need to bounce off it
+			//To do so, we reflect the ball's velocity, around the wall's edge's surfacenormal
+			//This code was adapted from: http://www.3dkingdoms.com/weekly/weekly.php?a=2
 			Vector2D incoming(Xvel, Yvel);
 
 			Vector2D result = surfaceNormal * incoming.dot(surfaceNormal);
@@ -149,8 +115,6 @@ void Ball::update(Uint32 deltaTime, AngularWall * wallAngle)
 
 			Xvel = result.x;
 			Yvel = result.y;
-
-			printf("Hit angular wall\n");
 		}
 	}
 }

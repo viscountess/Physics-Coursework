@@ -47,11 +47,6 @@ void BasePhysics::reset()
 
 }
 
-//void BasePhysics::applyForce(float hForce, float vForce)
-//{
-//
-//}
-
 void BasePhysics::updateLabels(Uint32 deltaTime)
 {
 	SDL_Color labelColor = { 0, 255, 0 };
@@ -175,11 +170,6 @@ void BasePhysics::update(Uint32 deltaTime)
 		Xpos = Xpos + (Xvel * delta);
 
 	}
-
-
-	/*Yvel += accel * delta;
-	Ypos += Yvel * delta;
-	Xpos += Xvel * delta;*/
 
 	updateLabels(deltaTime);
 }

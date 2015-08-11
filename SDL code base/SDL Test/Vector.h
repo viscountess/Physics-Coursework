@@ -1,7 +1,8 @@
 #ifndef VECTOR_INCLUDE
 #define VECTOR_INCLUDE
 
-
+// Vector2D class derived from: http://www.terathon.com/code/vector2d.html
+// and expanded for this project.
 #include <math.h>
 
 

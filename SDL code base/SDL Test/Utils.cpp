@@ -1,6 +1,9 @@
 #include "Utils.h"
 
-
+//This function was adapted from code found on this page: http://www.cplusplus.com/forum/beginner/76692/
+//It takes in two vectors representing the start and end points of a line, and a single point to test against
+//The point is projected onto the line and clamped within the start and end point.
+//We use this value when tsting for a circle colliding with this line segment.
 Vector2D GetClosestPointOnLineSegment(const Vector2D& LinePointStart, const Vector2D& LinePointEnd,
 	const Vector2D& testPoint)
 {
@@ -12,6 +15,8 @@ Vector2D GetClosestPointOnLineSegment(const Vector2D& LinePointStart, const Vect
 
 	const float percAlongLine = dotProduct / lineSegSqrLength;
 
+	//This section clamps the value ebtween the start and end points
+	//Without it, the point would be just projected onto the line
 	if (percAlongLine < 0.0f)
 	{
 		return LinePointStart;
@@ -21,21 +26,20 @@ Vector2D GetClosestPointOnLineSegment(const Vector2D& LinePointStart, const Vect
 		return LinePointEnd;
 	}
 
-
-	return (LinePointStart + (LineDiffVect * percAlongLine));// (percAlongLine * (LinePointEnd - LinePointStart));
+	return (LinePointStart + (LineDiffVect * percAlongLine));
 }
 
-const float degToRad(const float _deg)
+const float degToRad(const float deg)
 {
-	return _deg * 0.0174532925f;
+	return deg * 0.0174532925f;
 }
 
-const float metersToPixels(const float _meters)
+const float metersToPixels(const float meters)
 {
-	return _meters * 100;
+	return meters * 100;
 }
 
-const float pixelsToMeters(const float _pixels)
+const float pixelsToMeters(const float pixels)
 {
-	return _pixels / 100.f;
+	return pixels / 100.f;
 }

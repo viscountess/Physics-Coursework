@@ -18,8 +18,8 @@ public:
 	float getWallXpos() { return xpos; }
 	float getWallYpos() { return ypos; }
 
-	Vector2D getSurfaceNormal(int _index);
-	void getWallPoints(int _index, Vector2D& _start, Vector2D& _end);
+	Vector2D getSurfaceNormal(int index);
+	void getWallPoints(int index, Vector2D& start, Vector2D& end);
 
 private:
 	float xpos, ypos, wallAngle, wallWidth, wallHeight;
